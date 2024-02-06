@@ -1,15 +1,19 @@
-
-import { log } from "node:console";
 import { createServer } from "node:http";
+
 const server = createServer((request, response) => {
     console.log("request received");
-    response.statusCode = 200;
-    response.setHeader("Content-Type", "text/html");
 
-    response.end(
-        "<html><body><h1>Questo sembra essere il server di Elio</h1></body></html>"
-    );
+    response.statusCode = 200;
+
+    response.setHeader("Content-Type", "application/json");
+
+    const jsonResponseBody = JSON.stringify({ location: "Mars" });
+
+    response.end(jsonResponseBody);
 });
+
 server.listen(3000, () => {
-    console.log("Il server di Elio lavora su localhost:3000");
-})
+    console.log(`Server running at http://localhost:3000`);
+});
+
+// The content-length is 19
