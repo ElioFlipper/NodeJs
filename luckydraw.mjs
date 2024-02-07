@@ -1,6 +1,5 @@
 function luckyDraw(player) {
     return new Promise((resolve, reject) => {
-
         const win = Boolean(Math.round(Math.random()));
 
         process.nextTick(() => {
@@ -10,15 +9,21 @@ function luckyDraw(player) {
                 reject(new Error(`${player} lost the draw.`));
             }
         });
-
-        function handleLuckyDraw(player) {
-            luckyDraw(player)
-                .then((result) => {console.log(result)})
-                .catch((error) => {console.error(error.message)});
-        }
     });
 }
 
-luckyDraw("Joe")
-luckyDraw("Carolina")
-luckyDraw("Sabrina")
+async function getResults(){
+    try {
+        const data1 = await luckyDraw("Tina");
+        console.log("data1: ", data1);
+        const data2 = await luckyDraw("Jorge");
+        console.log("data2: ", data2);
+        const data3 = await luckyDraw("Julien");
+        console.log("data3: ", data3);
+        
+    } catch (error) {
+        console.error(error);        
+    }
+}
+
+getResults();
