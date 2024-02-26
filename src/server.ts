@@ -3,8 +3,10 @@ import express from 'express'
 // import morgan from 'morgan'
 import dotenv from 'dotenv'
 import { getAll, getOneById, create, updateById, deleteById, createImage } from './controllers/planets.js'
-import {logIn, signUp} from './controllers/users.js'
+import {logIn, signUp, logOut} from './controllers/users.js'
+import authorize from "./authorize.js"
 import multer from "multer"
+import "./passport.js"
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -37,6 +39,9 @@ app.post("/api/planets/:id/image", upload.single("image"), createImage)
 app.post("/api/users/login", logIn)
 
 app.post("/api/users/signup", signUp)
+app.get("/api/users/logout", authorize,  logOut)
+
+
 
 app.listen(port, () => {
     console.log(`Example app listening on port http://localhost:${port}`)

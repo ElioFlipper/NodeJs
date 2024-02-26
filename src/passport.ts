@@ -1,6 +1,6 @@
 import passport from 'passport';
 import passportJWT, { StrategyOptions } from 'passport-jwt';
-import { db } from './db';
+import { db } from './db.js';
 import * as dotenv from "dotenv";
 dotenv.config()
 
