@@ -1,9 +1,36 @@
-export const items = [
-    { id: 1, name: "Bike", price: 100 },
-    { id: 2, name: "TV", price: 200 },
-    { id: 3, name: "Album", price: 10 },
-    { id: 4, name: "Book", price: 5 },
-    { id: 5, name: "Phone", price: 500 },
-    { id: 6, name: "Computer", price: 1000 },
-    { id: 7, name: "Keyboard", price: 25 },
-  ];
+import pgPromise from "pg-promise";
+
+const db = pgPromise()("postgres://postgres:postgres@localhost:5432/postgres")
+
+const setUpDb = async () => {
+    await db.none(`
+    DROP TABLE IF EXISTS planets;
+
+
+        CREATE TABLE planets (
+            id SERIAL NOT NULL PRIMARY KEY,
+            name TEXT NOT NULL,
+            image TEXT
+        );
+
+        DROP TABLE IF EXISTS users CASCADE;
+
+        CREATE TABLE users (
+            id SERIAL NOT NULL PRIMARY KEY,
+            username TEXT NOT NULL,
+            password TEXT NOT NULL,
+            token TEXT
+        )
+    `)
+
+    await db.none(`INSERT INTO planets (name) VALUES ('Earth')`)
+    await db.none(`INSERT INTO planets (name) VALUES ('Mars')`)
+    await db.none(`INSERT INTO users (username, password) VALUES ('elio', 'flipper')`)
+
+    const planets = await db.many(`SELECT * FROM planets`)
+    console.log(planets);
+
+}
+setUpDb()
+
+export { db } 
