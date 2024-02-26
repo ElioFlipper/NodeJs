@@ -3,7 +3,7 @@ import express from 'express'
 // import morgan from 'morgan'
 import dotenv from 'dotenv'
 import { getAll, getOneById, create, updateById, deleteById, createImage } from './controllers/planets.js'
-import {logIn} from './controllers/users.js'
+import {logIn, signUp} from './controllers/users.js'
 import multer from "multer"
 
 const storage = multer.diskStorage({
@@ -35,6 +35,8 @@ app.delete("/api/planets/:id", deleteById)
 app.post("/api/planets/:id/image", upload.single("image"), createImage)
 
 app.post("/api/users/login", logIn)
+
+app.post("/api/users/signup", signUp)
 
 app.listen(port, () => {
     console.log(`Example app listening on port http://localhost:${port}`)
